@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Recipes | RecipeHub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="{{ url_for('home') }}" class="logo">🍲 RecipeHub</a>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('recipes_page') }}">Recipes</a>
+        </nav>
+    </header>
+
+    <section class="section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">DISCOVER SOMETHING DELICIOUS</p>
+                <h2>Explore All Recipes</h2>
+                <p>Find your next favorite meal.</p>
+            </div>
+            <input type="text" id="searchInput"
+                   placeholder="Search recipes...">
+        </div>
+
+        <div class="recipe-grid" id="recipeGrid">
+            {% for recipe in recipes %}
+            <article class="recipe-card">
+                <div class="recipe-image">
+                    <img src="{{ recipe.image_url }}"
+                         alt="{{ recipe.name }}"
+                         loading="lazy">
+                    <span class="category">{{ recipe.category }}</span>
+                </div>
+
+                <div class="recipe-info">
+                    <h3>{{ recipe.name }}</h3>
+                    <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
+                    <p>{{ recipe.instructions }}</p>
+
+                    <a class="video-link"
+                       href="https://www.youtube.com/results?search_query={{ recipe.name | urlencode }}+recipe"
+                       target="_blank" rel="noopener noreferrer">
+                        ▶ Watch on YouTube
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        <p id="noResults" hidden>No matching recipes found.</p>
+    </section>
+
+    <footer>
+        <p>🍲 RecipeHub — Made for food lovers.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
